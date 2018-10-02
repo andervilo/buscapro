@@ -5,14 +5,14 @@
 	use DB;
 	use CRUDBooster;
 
-	class AdminProfissaoController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class AdminEspecialidadeController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
 			$this->title_field = "id";
 			$this->limit = "5";
-			$this->orderby = "profdesc,asc";
+			$this->orderby = "id,desc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
 			$this->button_bulk_action = false;
@@ -20,31 +20,30 @@
 			$this->button_add = true;
 			$this->button_edit = true;
 			$this->button_delete = true;
-			$this->button_detail = false;
+			$this->button_detail = true;
 			$this->button_show = true;
 			$this->button_filter = true;
 			$this->button_import = false;
 			$this->button_export = false;
-			$this->table = "profissao";
+			$this->table = "especialidade";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Código","name"=>"id"];
-			$this->col[] = ["label"=>"Profissão","name"=>"profdesc"];
-			//$this->col[] = ["label" => "Especialidades", ]
+			$this->col[] = ["label"=>"Profissão","name"=>"profissao_id","join"=>"profissao,profdesc"];
+			$this->col[] = ["label"=>"Descricão","name"=>"descricao","width"=>"150"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Id','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
-			$this->form[] = ['label'=>'Descrição','name'=>'profdesc','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
+			$this->form[] = ['label'=>'Profissão','name'=>'profissao_id','type'=>'select2','validation'=>'required|integer|min:0|required','width'=>'col-sm-10','datatable'=>'profissao,profdesc'];
+			$this->form[] = ['label'=>'Descricão','name'=>'descricao','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Id','validation'=>'required','width'=>'col-sm-9'];
-			//$this->form[] = ['label'=>'Descrição','name'=>'profdesc','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
+			//$this->form[] = ['label'=>'Profissão','name'=>'profissao_id','type'=>'select2','validation'=>'required|integer|min:0|required','width'=>'col-sm-10','datatable'=>'profissao,profdesc'];
+			//$this->form[] = ['label'=>'Descricão','name'=>'descricao','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			# OLD END FORM
 
 			/* 

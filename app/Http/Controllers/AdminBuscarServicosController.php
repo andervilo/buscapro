@@ -5,14 +5,14 @@
 	use DB;
 	use CRUDBooster;
 
-	class AdminProfissaoController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class AdminBuscarServicosController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
 			$this->title_field = "id";
 			$this->limit = "5";
-			$this->orderby = "profdesc,asc";
+			$this->orderby = "id,desc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
 			$this->button_bulk_action = false;
@@ -20,31 +20,35 @@
 			$this->button_add = true;
 			$this->button_edit = true;
 			$this->button_delete = true;
-			$this->button_detail = false;
+			$this->button_detail = true;
 			$this->button_show = true;
 			$this->button_filter = true;
 			$this->button_import = false;
 			$this->button_export = false;
-			$this->table = "profissao";
+			$this->table = "servico";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Código","name"=>"id"];
-			$this->col[] = ["label"=>"Profissão","name"=>"profdesc"];
-			//$this->col[] = ["label" => "Especialidades", ]
+			$this->col[] = ["label"=>"Usuário","name"=>"user_id","join"=>"cms_users,name"];
+			$this->col[] = ["label"=>"E-mail","name"=>"user_id","join"=>"cms_users,email"];
+			$this->col[] = ["label"=>"Profissão","name"=>"profissao_id","join"=>"profissao,profdesc"];
+			$this->col[] = ["label"=>"Descrição","name"=>"descricao"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Id','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
-			$this->form[] = ['label'=>'Descrição','name'=>'profdesc','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
+			$this->form[] = ['label'=>'Usuário','name'=>'user_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id='.CRUDBooster::myid()];
+			$this->form[] = ['label'=>'Profissão','name'=>'profissao_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'profissao,profdesc'];
+			$this->form[] = ['label'=>'Especialidades','name'=>'especialidades','type'=>'select2','width'=>'col-sm-10','datatable'=>'especialidade,descricao','relationship_table'=>'servico_especialidade'];
+			$this->form[] = ['label'=>'Descrição','name'=>'descricao','type'=>'textarea','validation'=>'required|string|min:5|max:5000','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Id','validation'=>'required','width'=>'col-sm-9'];
-			//$this->form[] = ['label'=>'Descrição','name'=>'profdesc','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
+			//$this->form[] = ["label"=>"User Id","name"=>"user_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"user,id"];
+			//$this->form[] = ["label"=>"Profissao Id","name"=>"profissao_id","type"=>"select2","required"=>TRUE,"validation"=>"required|integer|min:0","datatable"=>"profissao,id"];
+			//$this->form[] = ["label"=>"Descricao","name"=>"descricao","type"=>"textarea","required"=>TRUE,"validation"=>"required|string|min:5|max:5000"];
 			# OLD END FORM
 
 			/* 
